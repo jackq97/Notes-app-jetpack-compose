@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.jetnoteapp.screens.NotesScreen
 import com.example.jetnoteapp.ui.theme.JetNoteAppTheme
 
 /* at the start of the app we gonna add
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                
+                NotesScreen()
             }
         }
     }
@@ -50,7 +51,7 @@ fun MyApp(content: @Composable () -> Unit) {
 fun DefaultPreview() {
     JetNoteAppTheme {
         MyApp {
-            Text(text = "hello")
+
         }
     }
 }

@@ -1,17 +1,20 @@
 package com.example.jetnoteapp.components
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 /*this function gives us a lot of info about
 * the how can we use text fields as separate
@@ -50,4 +53,31 @@ fun NoteInputText(
 
         )
     )
+}
+
+//@Preview
+@Composable
+fun NoteButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true
+) {
+
+
+    Button(onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(3.5.dp),
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(0xFF346DF8),
+            contentColor = Color.White
+        )
+        ) {
+        
+        Text(text = text,
+            style = MaterialTheme.typography.button
+            )
+    }
+    
 }
