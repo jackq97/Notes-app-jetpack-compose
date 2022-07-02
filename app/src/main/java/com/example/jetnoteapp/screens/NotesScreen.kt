@@ -68,7 +68,7 @@ fun NotesScreen( noteList: List<Note>,
         ) }) {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
         modifier = Modifier.fillMaxSize())
 
         {
@@ -107,6 +107,15 @@ fun NotesScreen( noteList: List<Note>,
                 * also gonna clear our text fields by setting them to empty string */
 
                 if(titleText.value.isNotEmpty()) {
+
+                    // here we are passing the data into the note object
+                    // so it gets stored inside the list state we created
+                    // in main activity
+
+                    addNote(Note(title = titleText.value,
+                        description = descriptionText.value
+                        ))
+
                     // we gonna save here and clear the fields
                     titleText.value = ""
                     descriptionText.value = ""
@@ -126,8 +135,10 @@ fun NotesScreen( noteList: List<Note>,
 
             LazyColumn() {
 
-                items(items = NoteDataSource().loadData()){ noteList ->
-                    NoteRow(note = noteList)
+                items(noteList){ noteList ->
+                    NoteRow(note = noteList){note ->
+                        removeNote(note)
+                    }
                 }
 
             }
@@ -138,5 +149,5 @@ fun NotesScreen( noteList: List<Note>,
 @Preview(showBackground = true)
 @Composable
 fun NotesScreenPreview(){
-    NotesScreen(noteList = emptyList(), {},{})
+    //NotesScreen(noteList = emptyList(), {})
 }

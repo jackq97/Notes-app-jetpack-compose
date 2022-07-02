@@ -1,5 +1,6 @@
 package com.example.jetnoteapp.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -86,10 +87,12 @@ fun NoteButton(
     }
 }
 
+// TODO: maybe this onclick will be used to get data that we gonna wipe
+
 @Composable
 fun NoteRow( note: Note,
-           //  onNoteClick: (Note) -> Unit,
-             modifier: Modifier = Modifier
+             modifier: Modifier = Modifier,
+             onNoteRemove: (Note) -> Unit
              ) {
 
     val titleMaxLines = 1
@@ -101,6 +104,9 @@ fun NoteRow( note: Note,
         elevation = 4.dp,
         color = Color(0xFFB7DAFF),
         modifier = modifier.padding(10.dp)
+            .clickable {
+                onNoteRemove(note)
+            }
         ) {
         Column(
             modifier = Modifier.padding(10.dp)

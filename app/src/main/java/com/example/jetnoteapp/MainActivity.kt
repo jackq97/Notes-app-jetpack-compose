@@ -8,8 +8,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.jetnoteapp.model.Note
 import com.example.jetnoteapp.screens.NotesScreen
 import com.example.jetnoteapp.ui.theme.JetNoteAppTheme
 
@@ -22,12 +25,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                NotesScreen(noteList = emptyList(), {},{})
+
+                val notes = remember{
+                    mutableStateListOf<Note>()
+                }
+
+                NotesScreen(notes,
+                    removeNote = {note ->
+                    notes.remove(note) },
+                    addNote = {note ->
+                        notes.add(note)}
+                )
             }
         }
     }
 }
-
 
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
