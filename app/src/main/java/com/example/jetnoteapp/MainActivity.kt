@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                NotesScreen()
+                NotesScreen(noteList = emptyList(), {},{})
             }
         }
     }

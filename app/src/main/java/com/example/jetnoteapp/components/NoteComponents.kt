@@ -1,5 +1,6 @@
 package com.example.jetnoteapp.components
 
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,8 +14,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.jetnoteapp.data.NoteDataSource
+import com.example.jetnoteapp.model.Note
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 /*this function gives us a lot of info about
 * the how can we use text fields as separate
@@ -64,7 +70,6 @@ fun NoteButton(
     enabled: Boolean = true
 ) {
 
-
     Button(onClick = onClick,
         modifier = modifier,
         shape = RoundedCornerShape(3.5.dp),
@@ -79,5 +84,54 @@ fun NoteButton(
             style = MaterialTheme.typography.button
             )
     }
-    
+}
+
+@Composable
+fun NoteRow( note: Note,
+           //  onNoteClick: (Note) -> Unit,
+             modifier: Modifier = Modifier
+             ) {
+
+    val titleMaxLines = 1
+    val descriptionMaxLines = 2
+
+    // changing card to surface
+
+    Surface(shape = RoundedCornerShape(topEnd = 10.dp),
+        elevation = 4.dp,
+        color = Color(0xFFB7DAFF),
+        modifier = modifier.padding(10.dp)
+        ) {
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+
+            Text(text = note.title,
+                style = MaterialTheme.typography.body2,
+                maxLines = titleMaxLines,
+                modifier = Modifier.fillMaxWidth()
+                )
+            Text(text = note.description,
+                style = MaterialTheme.typography.body1,
+                maxLines = descriptionMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth()
+                )
+
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+
+
+                // this is the data time formatter, this how you use it in
+                // jetpack compose
+
+                Text(text = note.entryDate.
+                format(DateTimeFormatter
+                    .ofPattern("EEE, d MMM")),
+                    color = Color.DarkGray)
+
+            }
+        }
+    }
 }
