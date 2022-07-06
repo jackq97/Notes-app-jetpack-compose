@@ -3,6 +3,7 @@ package com.example.jetnoteapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -29,7 +30,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApp {
 
+                // this how you instantiate your view model class
+                // (need to learn more about by delegate)
+                // also it is very important to instantiate your
+                // view model class out of the composable function
+                // so the data can survive the recomposition
+                // after that you can pass the data as parameter
+                // inside the composable function
 
+                val noteViewModel: NoteViewModel by viewModels()
+
+                NotesApp(noteViewModel)
         }
     }
 }
