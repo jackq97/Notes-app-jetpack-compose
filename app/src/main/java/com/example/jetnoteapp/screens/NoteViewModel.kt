@@ -1,5 +1,7 @@
 package com.example.jetnoteapp.screens
 
+import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.jetnoteapp.data.NoteDataSource
 import com.example.jetnoteapp.model.Note
@@ -18,12 +20,12 @@ class NoteViewModel: ViewModel() {
     // so all the operations that we gonna perform on view model
 
     // our note list
-    private val noteList = mutableListOf<Note>()
+    private val noteList = mutableStateListOf<Note>()
 
 
     init {
         // doing this so we have some data to work with
-        noteList.addAll(NoteDataSource().loadData())
+      noteList.addAll(NoteDataSource().loadData())
     }
 
     // fun to add note
@@ -32,12 +34,13 @@ class NoteViewModel: ViewModel() {
     }
 
     // fun to remove note
-    fun removeNote(note: Note){
-        noteList.remove(note)
+    fun removeNote(index: Int){
+        Log.d("view model",
+            "removeNote: invoked from view mode $index")
+        noteList.removeAt(index)
     }
 
     // fun to get the list
-    @JvmName("getNoteList1")
     fun getNoteList(): List<Note>{
         return noteList
     }

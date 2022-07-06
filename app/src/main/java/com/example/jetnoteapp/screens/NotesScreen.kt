@@ -1,10 +1,12 @@
 package com.example.jetnoteapp.screens
 
-import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -14,17 +16,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.EmptyPath
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetnoteapp.R
 import com.example.jetnoteapp.components.NoteButton
 import com.example.jetnoteapp.components.NoteInputText
-import com.example.jetnoteapp.components.NoteRow
-import com.example.jetnoteapp.data.NoteDataSource
 import com.example.jetnoteapp.model.Note
+import java.time.format.DateTimeFormatter
 
 /*this is our notes screen, even though the app has
 * only one screen we gonna make a separate package
@@ -39,8 +40,8 @@ import com.example.jetnoteapp.model.Note
 
 @Composable
 fun NotesScreen( noteList: List<Note>,
-                 removeNote: (Note) -> Unit,
-                 addNote: (Note) -> Unit
+                 addNote: (Note) -> Unit,
+                 removeNote: (Int) -> Unit,
                  ){
 
     // context
@@ -69,7 +70,8 @@ fun NotesScreen( noteList: List<Note>,
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(10.dp))
 
         {
@@ -136,13 +138,61 @@ fun NotesScreen( noteList: List<Note>,
 
             Divider()
 
-            LazyColumn() {
+            LazyColumn {
 
-                items(noteList){ noteList ->
-                    NoteRow(note = noteList){note ->
-                        removeNote(note)
-                    }
+                itemsIndexed(noteList){ index, item ->
+                    NoteRow(note = item,
+                    modifier = Modifier.clickable { removeNote(index) })
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoteRow( note: Note,
+             modifier: Modifier = Modifier
+) {
+
+    val titleMaxLines = 1
+    val descriptionMaxLines = 2
+
+    // changing card to surface
+
+    Surface(shape = RoundedCornerShape(topEnd = 10.dp),
+        elevation = 4.dp,
+        color = Color(0xFFB7DAFF),
+        modifier = modifier
+            .padding(10.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+
+            Text(text = note.title,
+                style = MaterialTheme.typography.body2,
+                maxLines = titleMaxLines,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(text = note.description,
+                style = MaterialTheme.typography.body1,
+                maxLines = descriptionMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+
+                // this is the data time formatter, this how you use it in
+                // jetpack compose
+
+                Text(text = note.entryDate.
+                format(
+                    DateTimeFormatter
+                    .ofPattern("EEE, d MMM")),
+                    color = Color.DarkGray)
 
             }
         }
@@ -152,5 +202,5 @@ fun NotesScreen( noteList: List<Note>,
 @Preview(showBackground = true)
 @Composable
 fun NotesScreenPreview(){
-    //NotesScreen(noteList = emptyList(), {})
+
 }

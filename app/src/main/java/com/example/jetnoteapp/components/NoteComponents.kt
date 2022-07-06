@@ -87,57 +87,6 @@ fun NoteButton(
     }
 }
 
-// TODO: maybe this onclick will be used to get data that we gonna wipe
-
-@Composable
-fun NoteRow( note: Note,
-             modifier: Modifier = Modifier,
-             onNoteRemove: (Note) -> Unit
-             ) {
-
-    val titleMaxLines = 1
-    val descriptionMaxLines = 2
-
-    // changing card to surface
-
-    Surface(shape = RoundedCornerShape(topEnd = 10.dp),
-        elevation = 4.dp,
-        color = Color(0xFFB7DAFF),
-        modifier = modifier.padding(10.dp)
-            .clickable {
-                onNoteRemove(note)
-            }
-        ) {
-        Column(
-            modifier = Modifier.padding(10.dp)
-        ) {
-
-            Text(text = note.title,
-                style = MaterialTheme.typography.body2,
-                maxLines = titleMaxLines,
-                modifier = Modifier.fillMaxWidth()
-                )
-            Text(text = note.description,
-                style = MaterialTheme.typography.body1,
-                maxLines = descriptionMaxLines,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
-                )
-
-            Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
 
 
-                // this is the data time formatter, this how you use it in
-                // jetpack compose
 
-                Text(text = note.entryDate.
-                format(DateTimeFormatter
-                    .ofPattern("EEE, d MMM")),
-                    color = Color.DarkGray)
-
-            }
-        }
-    }
-}

@@ -1,6 +1,7 @@
 package com.example.jetnoteapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -65,7 +66,7 @@ fun MyApp(content: @Composable () -> Unit) {
 @Composable
 // here first we are instantiating note view model object
 // so we can work with it
-fun NotesApp(noteViewModel: NoteViewModel = viewModel()){
+fun NotesApp(noteViewModel: NoteViewModel){
 
     // first we gonna get the list to populate
     // our composable function
@@ -74,12 +75,11 @@ fun NotesApp(noteViewModel: NoteViewModel = viewModel()){
     // putting all the necessary functions inside
     // our note screen
     NotesScreen(noteList = notesList,
-        removeNote = {note ->
-
-            noteViewModel.removeNote(note)
+        removeNote = {index ->
+            noteViewModel.removeNote(index)
+            Log.d("remove invoked", "NotesApp: $index")
         },
         addNote = {note ->
-
             noteViewModel.addNote(note)
         }
     )
