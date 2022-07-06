@@ -69,7 +69,8 @@ fun NotesScreen( noteList: List<Note>,
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-        modifier = Modifier.fillMaxSize())
+        modifier = Modifier.fillMaxSize()
+            .padding(10.dp))
 
         {
             NoteInputText(text = titleText.value,
@@ -100,7 +101,9 @@ fun NotesScreen( noteList: List<Note>,
 
                 }, label = "Description")
 
-            NoteButton(text = "Save", onClick = {
+            NoteButton(text = "Save",
+                modifier = Modifier.padding(10.dp),
+                onClick = {
                 /*little more validation here
                 * gonna check if the title or description is not empty before
                 * adding it our list

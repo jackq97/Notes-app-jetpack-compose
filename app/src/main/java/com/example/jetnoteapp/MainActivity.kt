@@ -12,7 +12,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetnoteapp.model.Note
+import com.example.jetnoteapp.screens.NoteViewModel
 import com.example.jetnoteapp.screens.NotesScreen
 import com.example.jetnoteapp.ui.theme.JetNoteAppTheme
 
@@ -26,17 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApp {
 
-                val notes = remember{
-                    mutableStateListOf<Note>()
-                }
 
-                NotesScreen(notes,
-                    removeNote = {note ->
-                    notes.remove(note) },
-                    addNote = {note ->
-                        notes.add(note)}
-                )
-            }
         }
     }
 }
@@ -58,12 +51,35 @@ fun MyApp(content: @Composable () -> Unit) {
     
 }
 
+@Composable
+// here first we are instantiating note view model object
+// so we can work with it
+fun NotesApp(noteViewModel: NoteViewModel = viewModel()){
+
+    // first we gonna get the list to populate
+    // our composable function
+    val notesList = noteViewModel.getNoteList()
+
+    // putting all the necessary functions inside
+    // our note screen
+    NotesScreen(noteList = notesList,
+        removeNote = {note ->
+
+            noteViewModel.removeNote(note)
+        },
+        addNote = {note ->
+
+            noteViewModel.addNote(note)
+        }
+    )
+}
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetNoteAppTheme {
-        MyApp {
 
-        }
     }
 }

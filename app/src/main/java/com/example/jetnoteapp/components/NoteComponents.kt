@@ -48,9 +48,9 @@ fun NoteInputText(
         onValueChange = onTextChange,
         maxLines = maxLine,
         label = { Text(text = label) },
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(
-       //     backgroundColor = Color.Transparent
+            backgroundColor = Color.Transparent
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done),
