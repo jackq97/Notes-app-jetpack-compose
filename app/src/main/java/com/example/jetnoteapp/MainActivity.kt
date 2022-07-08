@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 * all the appropriate packages to segregate our
 * data better */
 
-
+// defining the entry point for hilt
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
