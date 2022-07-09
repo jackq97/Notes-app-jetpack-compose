@@ -188,11 +188,11 @@ fun NoteRow( note: Note,
                 // this is the data time formatter, this how you use it in
                 // jetpack compose
 
-                Text(text = note.entryDate.
+               /* Text(text = note.entryDate.
                 format(
                     DateTimeFormatter
                     .ofPattern("EEE, d MMM")),
-                    color = Color.DarkGray)
+                    color = Color.DarkGray)*/
 
             }
         }

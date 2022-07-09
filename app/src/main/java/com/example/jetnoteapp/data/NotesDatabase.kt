@@ -2,6 +2,8 @@ package com.example.jetnoteapp.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.example.jetnoteapp.model.Note
 
 
@@ -11,6 +13,7 @@ import com.example.jetnoteapp.model.Note
 
 
 @Database(entities = [Note::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class NotesDatabase: RoomDatabase() {
 
     // here we creating a function that returns our
