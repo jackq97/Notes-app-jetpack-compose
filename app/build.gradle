@@ -1,9 +1,8 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    // the below two to this part of the code
+    id 'kotlin-android'
     id 'kotlin-kapt'
-//    id 'com.google.dagger.hilt.android' version '2.42' apply false
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
