@@ -17,6 +17,8 @@ class NoteRepository @Inject constructor(private val noteDatabaseDao: NoteDataba
     suspend fun updateNote(note: Note) = noteDatabaseDao.update(note)
     suspend fun deleteNote(note: Note) = noteDatabaseDao.deleteNote(note)
     suspend fun deleteAllNotes() = noteDatabaseDao.deleteAll()
+
+    // getting notes is a bit weird because of the coroutines flow
     fun getAllNotes(): Flow<List<Note>> = noteDatabaseDao.getAllNotes()
         .flowOn(Dispatchers.IO)
         .conflate()
