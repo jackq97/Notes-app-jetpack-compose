@@ -84,8 +84,8 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
         repository.updateNote(note)
     }
 
-    fun deleteNote(note: Note) = viewModelScope.launch {
-        repository.deleteNote(note)
+    fun deleteByIdNote(id: String) = viewModelScope.launch {
+        repository.deleteNoteById(id)
     }
 
     fun deleteAll() = viewModelScope.launch {
