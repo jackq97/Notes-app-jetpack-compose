@@ -57,9 +57,15 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
        viewModelScope.launch(Dispatchers.IO) {
            // this is how you retrieve a list from state flow
            repository.getAllNotes().distinctUntilChanged()
-               .collect{
+               .collect{ listOfNotes ->
                    // lambda for our notes
-                   
+                   if (listOfNotes.isEmpty()){
+                       // means list is empty
+                       Log.d("view model", "empty: empty list")
+                   } else {
+                       // means list is not empty so we gotta populate our note list here
+                       _noteList.value = listOfNotes
+                   }
                }
        }
     }
@@ -70,15 +76,15 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
     // the view model scope is used to work with room data
     // dao functions so we don't need to manually launch
     // operations in ui thread with coroutines scopes
-    suspend fun addNote(note: Note) = viewModelScope.launch {
+    fun addNote(note: Note) = viewModelScope.launch {
         repository.addNote(note)
     }
 
-    suspend fun updateNote(note: Note) = viewModelScope.launch {
+    fun updateNote(note: Note) = viewModelScope.launch {
         repository.updateNote(note)
     }
 
-    suspend fun deleteNote(note: Note) = viewModelScope.launch {
+    fun deleteNote(note: Note) = viewModelScope.launch {
         repository.deleteNote(note)
     }
 

@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -25,7 +24,6 @@ import com.example.jetnoteapp.R
 import com.example.jetnoteapp.components.NoteButton
 import com.example.jetnoteapp.components.NoteInputText
 import com.example.jetnoteapp.model.Note
-import java.time.format.DateTimeFormatter
 
 /*this is our notes screen, even though the app has
 * only one screen we gonna make a separate package
@@ -41,7 +39,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun NotesScreen( noteList: List<Note>,
                  addNote: (Note) -> Unit,
-                 removeNote: (Int) -> Unit,
+                 removeNote: (Note) -> Unit,
                  ){
 
     // context
@@ -140,9 +138,11 @@ fun NotesScreen( noteList: List<Note>,
 
             LazyColumn {
 
-                itemsIndexed(noteList){ index, item ->
+                itemsIndexed(noteList){ _, item ->
                     NoteRow(note = item,
-                    modifier = Modifier.clickable { removeNote(index) })
+                        onClickRow = { note ->
+                            removeNote(note) }
+                    )
                 }
             }
         }
@@ -151,7 +151,8 @@ fun NotesScreen( noteList: List<Note>,
 
 @Composable
 fun NoteRow( note: Note,
-             modifier: Modifier = Modifier
+             modifier: Modifier = Modifier,
+             onClickRow: (Note) -> Unit
 ) {
 
     val titleMaxLines = 1
@@ -164,6 +165,7 @@ fun NoteRow( note: Note,
         color = Color(0xFFB7DAFF),
         modifier = modifier
             .padding(10.dp)
+            .clickable { onClickRow(note) }
     ) {
         Column(
             modifier = Modifier.padding(10.dp)

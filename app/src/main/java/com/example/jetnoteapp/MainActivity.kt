@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -43,6 +44,9 @@ class MainActivity : ComponentActivity() {
                 // after that you can pass the data as parameter
                 // inside the composable function
 
+                // another way to instantiate view model
+                //val noteViewModel = viewModel<NoteViewModel>() // also works
+
                 val noteViewModel: NoteViewModel by viewModels()
 
                 NotesApp(noteViewModel)
@@ -74,13 +78,14 @@ fun NotesApp(noteViewModel: NoteViewModel){
 
     // first we gonna get the list to populate
     // our composable function
-    val notesList = noteViewModel.getNoteList()
+    val notesList = noteViewModel
+        .noteList.collectAsState().value
 
     // putting all the necessary functions inside
     // our note screen
     NotesScreen(noteList = notesList,
         removeNote = {index ->
-            noteViewModel.removeNote(index)
+            noteViewModel.deleteNote(index)
             Log.d("remove invoked", "NotesApp: $index")
         },
         addNote = {note ->
