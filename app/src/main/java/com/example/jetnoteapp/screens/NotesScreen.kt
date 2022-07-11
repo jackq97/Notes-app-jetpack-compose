@@ -1,5 +1,6 @@
 package com.example.jetnoteapp.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -41,6 +42,7 @@ fun NotesScreen( noteList: List<Note>,
                  addNote: (Note) -> Unit,
                  removeNote: (Note) -> Unit,
                  ){
+
 
     // context
     val context = LocalContext.current
@@ -141,7 +143,9 @@ fun NotesScreen( noteList: List<Note>,
                 itemsIndexed(noteList){ _, item ->
                     NoteRow(note = item,
                         onClickRow = { note ->
-                            removeNote(note) }
+                            removeNote(note)
+                            //Log.d("invoked here", "$note")
+                        }
                     )
                 }
             }
@@ -165,7 +169,10 @@ fun NoteRow( note: Note,
         color = Color(0xFFB7DAFF),
         modifier = modifier
             .padding(10.dp)
-            .clickable { onClickRow(note) }
+            .clickable {
+                onClickRow(note)
+                //Log.d("in surface", "NoteRow: surface clicked")
+            }
     ) {
         Column(
             modifier = Modifier.padding(10.dp)

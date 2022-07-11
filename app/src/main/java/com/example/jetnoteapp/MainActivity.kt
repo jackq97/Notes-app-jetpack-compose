@@ -84,10 +84,10 @@ fun NotesApp(noteViewModel: NoteViewModel){
     // putting all the necessary functions inside
     // our note screen
     NotesScreen(noteList = notesList,
-        removeNote = {index ->
-            noteViewModel.deleteNote(index)
-            Log.d("remove invoked", "NotesApp: $index")
-        },
+        removeNote = {note ->
+            noteViewModel.deleteNote(note)
+                     },
+
         addNote = {note ->
             noteViewModel.addNote(note)
         }
