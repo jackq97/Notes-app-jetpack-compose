@@ -25,6 +25,7 @@ import com.example.jetnoteapp.R
 import com.example.jetnoteapp.components.NoteButton
 import com.example.jetnoteapp.components.NoteInputText
 import com.example.jetnoteapp.model.Note
+import com.example.jetnoteapp.util.formatDate
 
 /*this is our notes screen, even though the app has
 * only one screen we gonna make a separate package
@@ -44,8 +45,11 @@ fun NotesScreen( noteList: List<Note>,
                  ){
 
 
+
     // context
     val context = LocalContext.current
+
+
 
     val titleText = remember {
         mutableStateOf("")
@@ -197,11 +201,9 @@ fun NoteRow( note: Note,
                 // this is the data time formatter, this how you use it in
                 // jetpack compose
 
-               /* Text(text = note.entryDate.
-                format(
-                    DateTimeFormatter
-                    .ofPattern("EEE, d MMM")),
-                    color = Color.DarkGray)*/
+                // dot operator to get access to the type converter
+                Text(text = formatDate(note.entryDate.time) ,
+                    color = Color.DarkGray)
 
             }
         }
