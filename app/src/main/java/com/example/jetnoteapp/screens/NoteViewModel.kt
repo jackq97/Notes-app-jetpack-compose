@@ -58,14 +58,14 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
            // this is how you retrieve a list from state flow
            repository.getAllNotes().distinctUntilChanged()
                .collect{ listOfNotes ->
+
                    // lambda for our notes
                    if (listOfNotes.isEmpty()){
                        // means list is empty
                        Log.d("view model", "empty: empty list")
-                   } else {
-                       // means list is not empty so we gotta populate our note list here
-                       _noteList.value = listOfNotes
                    }
+
+                  _noteList.value = listOfNotes
                }
        }
     }
@@ -84,8 +84,8 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
         repository.updateNote(note)
     }
 
-    fun deleteByIdNote(id: String) = viewModelScope.launch {
-        repository.deleteNoteById(id)
+    fun deleteByIdNote(note: Note) = viewModelScope.launch {
+        repository.deleteSingleNote(note)
     }
 
     fun deleteAll() = viewModelScope.launch {

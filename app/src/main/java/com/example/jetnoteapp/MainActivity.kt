@@ -85,7 +85,7 @@ fun NotesApp(noteViewModel: NoteViewModel){
     // our note screen
     NotesScreen(noteList = notesList,
         removeNote = {note ->
-            noteViewModel.deleteByIdNote(note.id.toString())
+            noteViewModel.deleteByIdNote(note)
                      },
 
         addNote = {note ->
